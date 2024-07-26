@@ -26,22 +26,53 @@ Missing values and outliers were handled appropriately to ensure the quality of 
 ### Exploratory Data Analysis (EDA)
 
 Visualizations and statistical analyses were performed to understand the distribution and relationships between variables. Key findings include:
-- Distribution plots of features
-- Correlation heatmaps
-- Pair plots
 
-![Distribution Plots]([https://github.com/yourusername/yourrepository/raw/main/Distribution%20plots.png](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/Distribution%20plots.png))
-![Correlation Matrix]([https://github.com/yourusername/yourrepository/raw/main/corr_matrix.png](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/corr_matrix.png))
+#### Distribution of Features
 
-### Feature Engineering
+The following plot shows the distribution of each feature, separated by the `Outcome` (0 for non-diabetic and 1 for diabetic). This helps in understanding how each feature varies between diabetic and non-diabetic patients.
 
-New features were created, and existing features were transformed to enhance model performance.
+![Distribution Plots](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/Distribution%20plots.png)
 
-### Data Preprocessing
+- **Pregnancies**: Diabetic patients tend to have more pregnancies than non-diabetic patients.
+- **Glucose**: Higher glucose levels are strongly associated with diabetes.
+- **Blood Pressure**: The distribution is quite similar for both diabetic and non-diabetic patients.
+- **Skin Thickness**: Slightly higher values are observed in diabetic patients.
+- **Insulin**: Diabetic patients show a wider range of insulin levels, including very high values.
+- **BMI**: Higher BMI is associated with diabetes.
+- **DiabetesPedigreeFunction**: Slightly higher values in diabetic patients, indicating a familial influence.
+- **Age**: Older age is associated with a higher likelihood of diabetes.
 
-The data was normalized and categorical variables were encoded to prepare for model training.
+#### Correlation Matrix
 
-## Machine Learning Models
+The correlation matrix below shows the pairwise correlations between features. The color intensity indicates the strength of the correlation, with positive correlations in red and negative correlations in blue. This helps in identifying features that are highly correlated with each other and with the outcome.
+
+![Correlation Matrix](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/corr_matrix.png)
+
+- **Glucose**: Shows the highest positive correlation with the `Outcome` (0.49), making it a significant predictor of diabetes.
+- **BMI**: Also has a notable positive correlation with the `Outcome` (0.31).
+- **Age**: Shows a moderate positive correlation with the `Outcome` (0.24).
+- **Pregnancies**: Displays a moderate correlation with the `Outcome` (0.25).
+- **Insulin**: Has a lower correlation with the `Outcome` (0.18), but still significant.
+- **Other features**: Blood Pressure, Skin Thickness, and DiabetesPedigreeFunction have weaker correlations with the outcome.
+
+### Feature Engineering and Data Preprocessing
+
+The dataset was prepared for model training through the following steps:
+
+1. **Scaling Features**: The features were standardized to ensure they are on the same scale, which helps in improving the performance of certain machine learning algorithms.
+   ```python
+   from sklearn.preprocessing import StandardScaler
+
+   scaler = StandardScaler()
+   X_scaled = scaler.fit_transform(X)
+   ```
+2. **Splitting the Data**: The dataset was split into training and testing sets to evaluate the performance of the models.
+   ```python
+   from sklearn.model_selection import train_test_split
+
+   X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+   ```
+### Machine Learning Models
 
 The following models were trained and evaluated:
 
@@ -51,24 +82,32 @@ The following models were trained and evaluated:
    - Non-linear model that splits data into subsets
 3. **Random Forest**
    - Ensemble method of multiple decision trees
-4. **Support Vector Machine (SVM)**
-   - Linear model that finds the optimal separating hyperplane
-5. **K-Nearest Neighbors (KNN)**
-   - Non-parametric method based on majority class among k nearest neighbors
-6. **Neural Networks**
-   - Layers of interconnected neurons inspired by the human brain
 
-## Process Overview
+### Data Split
 
-1. **Load the Data**: Imported the dataset into the environment.
-2. **Data Cleaning**: Handled missing values and outliers.
-3. **Exploratory Data Analysis (EDA)**: Visualized data distributions and relationships.
-4. **Feature Engineering**: Created and transformed features.
-5. **Data Preprocessing**: Normalized and encoded features.
-6. **Model Training**: Trained multiple machine learning models.
-7. **Model Evaluation**: Assessed model performance using accuracy, precision, recall, F1-score, and ROC-AUC.
-8. **Model Tuning**: Optimized models through cross-validation and hyperparameter tuning.
-9. **Model Deployment**: Deployed the best-performing model for predictions.
+The following plot shows the distribution of diabetic and non-diabetic patients in the dataset.
+
+![Data Split](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/data_split.png)
+
+### Model Evaluation
+
+The performance of the models was evaluated using various metrics such as accuracy, precision, recall, F1-score, and ROC-AUC. The following plot shows the precision scores of different models using cross-validation.
+
+![Final Results](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/final%20results.png)
+
+- **Decision Tree (Default)**: Baseline model using default parameters.
+- **Decision Tree (Hyperparameter Tuning)**: Improved performance by tuning hyperparameters.
+- **Logistic Regression (Default)**: Baseline logistic regression model.
+- **Logistic Regression (CV)**: Logistic regression model with cross-validation.
+- **Logistic Regression (Hyperparameter Tuning)**: Further improved logistic regression model with hyperparameter tuning.
+- **Random Forest (Default)**: Baseline random forest model.
+- **Random Forest (Randomized Parameters)**: Improved random forest model by randomizing parameters.
+- **Random Forest (Hyperparameter Tuning)**: Further improved random forest model with hyperparameter tuning.
+- **Random Forest (Scaled)**: Final model evaluated on the test set, achieving a precision score of 0.801432.
+
+### Best Performing Model
+
+According to the precision scores from cross-validation, the best-performing model was the **Random Forest with Cross-Validation (CV)**, which achieved a precision score of 0.832881. This model was then evaluated on the test set as the **Random Forest (Scaled)**, which achieved a precision score of 0.801432, indicating its effectiveness in correctly identifying diabetic patients while minimizing false positives.
 
 ## Outputs
 
@@ -77,13 +116,15 @@ The outputs of the code include:
 - Model performance metrics (e.g., accuracy, precision, recall, F1-score, ROC-AUC)
 - Predictions on new data
 
-![Data Split]([https://github.com/yourusername/yourrepository/raw/main/data_split.png](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/data_split.png))
-![Final Results]([https://github.com/yourusername/yourrepository/raw/main/final%20results.png](https://github.com/idodotsar/machine_learning_project/blob/616c71e97c1045d74ae054f8e66304f0e13ef267/images/final%20results.png))
-
 ## Usage
 
 To run the project, execute the provided Jupyter notebook. Ensure all dependencies are installed as specified in the `requirements.txt` file.
 
 ## Conclusion
 
-This project demonstrates the application of various machine learning models to predict diabetes, highlighting the importance of data preprocessing, feature engineering, and model evaluation in building accurate predictive models.
+This project demonstrates the application of various machine learning models to predict diabetes, highlighting the importance of data preprocessing, feature engineering, and model evaluation in building accurate predictive models. The Random Forest model with Cross-Validation (CV) was the best performer during validation, achieving the highest precision score, and the Random Forest (Scaled) model performed effectively on the test set.
+```
+
+
+
+
