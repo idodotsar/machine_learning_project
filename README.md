@@ -123,8 +123,3 @@ To run the project, execute the provided Jupyter notebook. Ensure all dependenci
 ## Conclusion
 
 This project demonstrates the application of various machine learning models to predict diabetes, highlighting the importance of data preprocessing, feature engineering, and model evaluation in building accurate predictive models. The Random Forest model with Cross-Validation (CV) was the best performer during validation, achieving the highest precision score, and the Random Forest (Scaled) model performed effectively on the test set.
-```
-
-
-
-
